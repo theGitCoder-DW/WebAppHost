@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VIS2k Discount Promo</title>
+  <style>
+    body { font-family: Arial; background: #f4f4f4; padding: 2rem; }
+    form { background: white; padding: 2rem; max-width: 400px; margin: auto; border-radius: 8px; }
+    input, button { display: block; width: 100%; margin-top: 1rem; padding: 0.5rem; }
+    .success { color: green; margin-top: 1rem; }
+    .error { color: red; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+
+  <form id="promoForm">
+    <h2>Get 10% Off!</h2>
+    <input type="text" id="name" placeholder="Your Name" required />
+    <input type="email" id="email" placeholder="Email ID" required />
+    <input type="tel" id="contact" placeholder="Contact Number" required />
+    <input type="text" id="code" placeholder="Enter Promo Code" required />
+    <button type="submit">Submit</button>
+    <div id="message"></div>
+  </form>
+
+  <script>
+    const form = document.getElementById("promoForm");
+    const messageDiv = document.getElementById("message");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("Name").value.trim();
+      const email = document.getElementById("Email").value.trim();
+      const contact = document.getElementById("Contact").value.trim();
+      const code = document.getElementById("Code").value.trim();
+s
+      if (code !== "VIS2k") {
+        messageDiv.textContent = "Invalid promo code.";
+        messageDiv.className = "error";
+        return;
+      }
+
+      const data = { name, email, contact, code };
+
+      fetch("https://script.google.com/macros/s/AKfycbwV7fRFcyzetC-J0XJAz4ydYNVYOFMCxZ_UIIdCv5UozUxmk6co3fpQPw2WrDuTunL8/exec", {
+        method: "POST",
+        mode: "no-cors", // Avoids CORS errors
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }).then(() => {
+        messageDiv.textContent = "Success! You’ve received a 10% discount.";
+        messageDiv.className = "success";
+        form.reset();
+      }).catch(() => {
+        messageDiv.textContent = "Something went wrong. Try again later.";
+        messageDiv.className = "error";
+      });
+    });
+  </script>
+
+</body>
+</html>
